@@ -14,8 +14,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Load additional functions (like wp_htaccess_get_file_content)
+require_once(plugin_dir_path(__FILE__) . 'includes/htaccess-functions.php');
+
 // Load the admin page
 require_once(plugin_dir_path(__FILE__) . 'admin/htaccess-editor-page.php');
-
-// Load additional functions
-require_once(plugin_dir_path(__FILE__) . 'includes/htaccess-functions.php');
