@@ -121,4 +121,26 @@ function wp_htaccess_restore_backup($backup_file) {
         echo '<div class="notice notice-error is-dismissible"><p>Error: Backup file not found.</p></div>';
     }
 }
+
+// Function to save the .htaccess file
+function wp_htaccess_save_file($content) {
+    $htaccess_file = ABSPATH . '.htaccess';
+
+    if (!is_writable($htaccess_file)) {
+        add_settings_error('htaccess_editor', 'htaccess_error', 'Error: The .htaccess file is not writable. Please check file permissions.', 'error');
+        return false;
+    }
+
+    if (file_exists($htaccess_file)) {
+        copy($htaccess_file, $htaccess_file . '.backup-' . time());
+    }
+
+    if (file_put_contents($htaccess_file, $content) === false) {
+        add_settings_error('htaccess_editor', 'htaccess_error', 'Error: Unable to save the .htaccess file. Please try again.', 'error');
+        return false;
+    }
+
+    add_settings_error('htaccess_editor', 'htaccess_success', '.htaccess file saved successfully!', 'updated');
+    return true;
+}
 ?>
